@@ -28,6 +28,7 @@ const router = new VueRouter({
 			path: '/',
 			redirect: 'login',
 			beforeEnter: rejectAuthUser,
+			component: () => import('@/views/LoginPage.vue'),
 		},
 		{
 			path: '/signup',

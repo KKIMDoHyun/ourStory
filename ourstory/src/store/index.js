@@ -66,5 +66,8 @@ export default new Vuex.Store({
 			deleteCookie('userInfo');
 			router.push({ name: 'login' });
 		},
+		// getUserInfo({commit}) {
+
+		// }
 	},
 });

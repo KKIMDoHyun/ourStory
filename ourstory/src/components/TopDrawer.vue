@@ -83,7 +83,7 @@ export default {
 			await this.$store.dispatch('LOGOUT');
 		},
 		goMain() {
-			this.isUserLogin ? this.$router.push('/main') : this.$router.push('/');
+			this.isLogin ? this.$router.push('/main') : this.$router.push('/');
 		},
 	},
 };
