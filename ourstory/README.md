@@ -1,24 +1,20 @@
-# ourstory
+# 영어 단어장
 
-## Project setup
-```
-npm install
-```
+## 2021-08-23
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### <활동>
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- 프로젝트 생성 및 환경 구성(vuetify, eslint 등)
+- strapi를 활용하여 가상 DB 구축
+- 회원가입 및 로그인 기능 구현
 
-### Lints and fixes files
-```
-npm run lint
-```
+### <막혔던 점>
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- strapi를 처음 사용해봤기 때문에 공부하는데 시간이 오래걸렸다.
+- 회원가입을 진행할 때 strapi의 어떤 주소로 데이터를 post 해야되는지 헤맸다.
+- 로그인을 할 때 토큰을 받아와서 저장해야 되는데, 값이 계속 빈 값으로 들어갔다. 또한 새로고침을 하면 로그인 상태가 유지되지 않았다.
+
+> 해결: strapi에서 처음으로 제공되는 주소인 /auth/local로 post를 하면 로그인이 되고, /auth/local/register로 post를 하면 회원가입이 되었다. 이를 이용하여 로그인 및 회원가입을 구현하였다. 로그인을 할 때 store에 있는 빈 token값이 먼저 저장되고 로그인이 되어서 빈 값이 나온 것이었다. 이를 axios의 interceptors를 이용하여 먼저 store에 값을 저장하고 이 값을 headers에 넣어주도록 하였다. 로그인 상태를 유지시키기 위해서 localStorage에 저장하는 방법과 쿠키를 저장하는 방법이 있는데, localStorage는 보안상 쿠키보다 덜 하기 때문에 쿠키에 저장하는 방법을 택했다.
+---
+
+
