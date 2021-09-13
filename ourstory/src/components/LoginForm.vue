@@ -47,6 +47,11 @@ export default {
 			errMessage: '',
 		};
 	},
+	computed: {
+		isLoginError() {
+			return this.$store.state.isLoginError;
+		},
+	},
 	methods: {
 		async login() {
 			try {
@@ -54,9 +59,9 @@ export default {
 					identifier: this.email,
 					password: this.password,
 				};
-				this.$store.dispatch('LOGIN', userData);
+				await this.$store.dispatch('LOGIN', userData);
+				this.LoginSuccess();
 				this.initForm();
-				this.$router.push({ name: 'main' });
 			} catch (err) {
 				if (
 					err.response.data.message[0].messages[0].message ===

@@ -66,8 +66,7 @@ export default {
 					email: this.email,
 					password: this.password,
 				};
-				const { data } = await signupUser(userData);
-				console.log(data);
+				await signupUser(userData);
 				this.isFail = false;
 				this.isSuccess = true;
 				this.initForm();
@@ -87,8 +86,6 @@ export default {
 				}
 				this.isFail = true;
 				this.isSuccess = false;
-				console.log(err);
-				console.log(err.response.data.message[0].messages[0].message);
 			}
 		},
 		initForm() {
