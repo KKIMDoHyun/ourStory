@@ -3,15 +3,20 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-	computed: {
-		userInfo() {
-			return this.$store.state.userInfo;
-		},
+	data() {
+		return {
+			userInfo: '',
+		};
 	},
 	created() {
-		console.log(this.$store.state.userInfo);
-		console.log(this.$store.state.token);
+		axios
+			.get(`http://localhost:1337/users/${this.$store.state.id}`)
+			.then(res => {
+				this.userInfo = res;
+			})
+			.catch(err => console.log(err));
 	},
 };
 </script>

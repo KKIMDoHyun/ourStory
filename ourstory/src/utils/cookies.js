@@ -2,8 +2,8 @@ function saveAuthToCookie(value) {
 	document.cookie = `token=${value}`;
 }
 
-function saveUserToCookie(value) {
-	document.cookie = `email=${value}`;
+function saveIdToCookie(value) {
+	document.cookie = `id=${value}`;
 }
 
 function saveUserInfoToCookie(value) {
@@ -17,9 +17,9 @@ function getAuthFromCookie() {
 	);
 }
 
-function getUserFromCookie() {
+function getIdFromCookie() {
 	return document.cookie.replace(
-		/(?:(?:^|.*;\s*)email\s*=\s*([^;]*).*$)|^.*$/,
+		/(?:(?:^|.*;\s*)id\s*=\s*([^;]*).*$)|^.*$/,
 		'$1',
 	);
 }
@@ -37,10 +37,10 @@ function deleteCookie(value) {
 
 export {
 	saveAuthToCookie,
-	saveUserToCookie,
 	saveUserInfoToCookie,
+	saveIdToCookie,
 	getAuthFromCookie,
-	getUserFromCookie,
 	getUserInfoFromCookie,
+	getIdFromCookie,
 	deleteCookie,
 };

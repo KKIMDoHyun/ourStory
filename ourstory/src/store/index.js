@@ -2,12 +2,12 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import {
 	saveAuthToCookie,
-	saveUserToCookie,
 	saveUserInfoToCookie,
 	getAuthFromCookie,
-	getUserFromCookie,
 	getUserInfoFromCookie,
 	deleteCookie,
+	saveIdToCookie,
+	getIdFromCookie,
 } from '@/utils/cookies';
 import { loginUser } from '@/api/auth';
 import router from '../router';
@@ -17,23 +17,23 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	state: {
 		userInfo: getUserInfoFromCookie() || null,
-		email: getUserFromCookie() || '',
+		id: getIdFromCookie() || '',
 		token: getAuthFromCookie() || '',
 	},
 	getters: {
 		isLogin(state) {
-			return state.email !== '';
+			return state.id !== '';
 		},
 	},
 	mutations: {
 		loginSuccess(state, payload) {
 			state.userInfo = payload;
 		},
-		setEmail(state, email) {
-			state.email = email;
+		setId(state, id) {
+			state.id = id;
 		},
-		clearEmail(state) {
-			state.email = '';
+		clearId(state) {
+			state.id = '';
 		},
 		logout(state) {
 			state.userInfo = null;
@@ -49,25 +49,22 @@ export default new Vuex.Store({
 		async LOGIN({ commit }, userData) {
 			const { data } = await loginUser(userData);
 			commit('setToken', data.jwt);
-			commit('setEmail', data.user.email);
+			commit('setId', data.user.id);
 			commit('loginSuccess', data.user);
 			saveAuthToCookie(data.jwt);
-			saveUserToCookie(data.user.email);
+			saveIdToCookie(data.user.id);
 			saveUserInfoToCookie(JSON.stringify(data.user));
-			router.push({ name: 'main' });
+			router.push({ name: 'main' }).catch(() => {});
 			return data;
 		},
 		LOGOUT({ commit }) {
-			commit('clearEmail');
+			commit('clearId');
 			commit('clearToken');
 			commit('logout');
 			deleteCookie('token');
-			deleteCookie('email');
+			deleteCookie('id');
 			deleteCookie('userInfo');
-			router.push({ name: 'login' });
+			router.push({ name: 'login' }).catch(() => {});
 		},
-		// getUserInfo({commit}) {
-
-		// }
 	},
 });
