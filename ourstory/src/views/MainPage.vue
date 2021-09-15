@@ -1,9 +1,14 @@
 <template>
-	<div>dd</div>
+	<MainForm></MainForm>
 </template>
 
 <script>
-export default {};
+import MainForm from '@/components/MainForm.vue';
+export default {
+	components: {
+		MainForm,
+	},
+};
 </script>
 
 <style></style>

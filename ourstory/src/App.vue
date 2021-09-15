@@ -1,6 +1,6 @@
 <template>
 	<v-app id="inspire">
-		<TopDrawer></TopDrawer>
+		<TopHeader></TopHeader>
 		<v-main>
 			<router-view></router-view>
 		</v-main>
@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import TopDrawer from '@/components/TopDrawer.vue';
+import TopHeader from '@/components/common/TopHeader.vue';
 export default {
 	components: {
-		TopDrawer,
+		TopHeader,
 	},
 };
 </script>

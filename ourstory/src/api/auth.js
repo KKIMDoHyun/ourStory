@@ -9,4 +9,9 @@ function loginUser(userData) {
 	return instance.post('auth/local', userData);
 }
 
-export { signupUser, loginUser };
+// 유저 정보 가져오기
+function getUserInfo(id) {
+	return instance.get(`users/${id}`);
+}
+
+export { signupUser, loginUser, getUserInfo };

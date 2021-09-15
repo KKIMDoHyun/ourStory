@@ -1,59 +1,42 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import mutations from './mutations';
 import {
 	saveAuthToCookie,
-	saveUserInfoToCookie,
+	// saveUserInfoToCookie,
 	getAuthFromCookie,
-	getUserInfoFromCookie,
+	// getUserInfoFromCookie,
 	deleteCookie,
 	saveIdToCookie,
 	getIdFromCookie,
 } from '@/utils/cookies';
-import { loginUser } from '@/api/auth';
+import { loginUser, getUserInfo } from '@/api/auth';
 import router from '../router';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		userInfo: getUserInfoFromCookie() || null,
+		userInfo: null,
 		id: getIdFromCookie() || '',
 		token: getAuthFromCookie() || '',
+		loadingStatus: false,
 	},
 	getters: {
 		isLogin(state) {
 			return state.id !== '';
 		},
 	},
-	mutations: {
-		loginSuccess(state, payload) {
-			state.userInfo = payload;
-		},
-		setId(state, id) {
-			state.id = id;
-		},
-		clearId(state) {
-			state.id = '';
-		},
-		logout(state) {
-			state.userInfo = null;
-		},
-		setToken(state, token) {
-			state.token = token;
-		},
-		clearToken(state) {
-			state.token = '';
-		},
-	},
+	mutations,
 	actions: {
 		async LOGIN({ commit }, userData) {
 			const { data } = await loginUser(userData);
 			commit('setToken', data.jwt);
 			commit('setId', data.user.id);
-			commit('loginSuccess', data.user);
+			commit('setUserInfo', data.user);
 			saveAuthToCookie(data.jwt);
 			saveIdToCookie(data.user.id);
-			saveUserInfoToCookie(JSON.stringify(data.user));
+			// saveUserInfoToCookie(JSON.stringify(data.user));
 			router.push({ name: 'main' }).catch(() => {});
 			return data;
 		},
@@ -63,8 +46,15 @@ export default new Vuex.Store({
 			commit('logout');
 			deleteCookie('token');
 			deleteCookie('id');
-			deleteCookie('userInfo');
-			router.push({ name: 'login' }).catch(() => {});
+			// deleteCookie('userInfo');
+			router.push({ name: 'main' }).catch(() => {});
+		},
+		async getUserInfo({ commit }, id) {
+			console.log(id);
+			const { data } = await getUserInfo(id);
+			console.log('ffffffffff', data);
+			commit('setUserInfo', data);
+			return data;
 		},
 	},
 });

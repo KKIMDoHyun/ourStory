@@ -1,22 +1,12 @@
 <template>
-	<v-container>{{ userInfo }}</v-container>
+	<MyPageForm></MyPageForm>
 </template>
 
 <script>
-import axios from 'axios';
+import MyPageForm from '@/components/MyPageForm.vue';
 export default {
-	data() {
-		return {
-			userInfo: '',
-		};
-	},
-	created() {
-		axios
-			.get(`http://localhost:1337/users/${this.$store.state.id}`)
-			.then(res => {
-				this.userInfo = res;
-			})
-			.catch(err => console.log(err));
+	components: {
+		MyPageForm,
 	},
 };
 </script>

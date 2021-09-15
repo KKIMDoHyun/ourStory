@@ -4,21 +4,21 @@ import store from '../store';
 
 Vue.use(VueRouter);
 
-const rejectAuthUser = (to, form, next) => {
-	if (store.getters.isLogin === true) {
-		alert('이미 로그인을 하셨습니다.');
-		next('/main');
-	} else {
-		next();
-	}
-};
+// const rejectAuthUser = (to, form, next) => {
+// 	if (store.getters.isLogin === true) {
+// 		alert('이미 로그인을 하셨습니다.');
+// 		next('/main');
+// 		return;
+// 	}
+// 	next();
+// };
 const onlyAuthUser = (to, form, next) => {
 	if (store.getters.isLogin === false) {
 		alert('로그인이 필요합니다.');
 		next('/');
-	} else {
-		next();
+		return;
 	}
+	next();
 };
 
 const router = new VueRouter({
@@ -26,26 +26,12 @@ const router = new VueRouter({
 	routes: [
 		{
 			path: '/',
-			redirect: 'login',
-			beforeEnter: rejectAuthUser,
-			component: () => import('@/views/LoginPage.vue'),
-		},
-		{
-			path: '/signup',
-			name: 'signup',
-			beforeEnter: rejectAuthUser,
-			component: () => import('@/views/SignupPage.vue'),
-		},
-		{
-			path: '/login',
-			name: 'login',
-			beforeEnter: rejectAuthUser,
-			component: () => import('@/views/LoginPage.vue'),
+			redirect: 'main',
+			component: () => import('@/views/MainPage.vue'),
 		},
 		{
 			path: '/main',
 			name: 'main',
-			beforeEnter: onlyAuthUser,
 			component: () => import('@/views/MainPage.vue'),
 		},
 		{
@@ -57,4 +43,7 @@ const router = new VueRouter({
 	],
 });
 
+// router.beforeEnter((to, from, next) => {
+// 	store.commit('startSpinner');
+// });
 export default router;
