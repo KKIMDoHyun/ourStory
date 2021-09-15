@@ -1,12 +1,12 @@
 <template>
-	<MainForm></MainForm>
+	<MainPageForm></MainPageForm>
 </template>
 
 <script>
-import MainForm from '@/components/MainForm.vue';
+import MainPageForm from '@/components/MainPageForm.vue';
 export default {
 	components: {
-		MainForm,
+		MainPageForm,
 	},
 };
 </script>

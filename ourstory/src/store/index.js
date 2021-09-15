@@ -3,9 +3,7 @@ import Vuex from 'vuex';
 import mutations from './mutations';
 import {
 	saveAuthToCookie,
-	// saveUserInfoToCookie,
 	getAuthFromCookie,
-	// getUserInfoFromCookie,
 	deleteCookie,
 	saveIdToCookie,
 	getIdFromCookie,
@@ -36,7 +34,6 @@ export default new Vuex.Store({
 			commit('setUserInfo', data.user);
 			saveAuthToCookie(data.jwt);
 			saveIdToCookie(data.user.id);
-			// saveUserInfoToCookie(JSON.stringify(data.user));
 			router.push({ name: 'main' }).catch(() => {});
 			return data;
 		},
@@ -46,13 +43,10 @@ export default new Vuex.Store({
 			commit('logout');
 			deleteCookie('token');
 			deleteCookie('id');
-			// deleteCookie('userInfo');
 			router.push({ name: 'main' }).catch(() => {});
 		},
-		async getUserInfo({ commit }, id) {
-			console.log(id);
+		async FETCH_USERINFO({ commit }, id) {
 			const { data } = await getUserInfo(id);
-			console.log('ffffffffff', data);
 			commit('setUserInfo', data);
 			return data;
 		},
