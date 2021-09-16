@@ -10,8 +10,8 @@ function loginUser(userData) {
 }
 
 // 유저 정보 가져오기
-function getUserInfo(id) {
+function fetchUserInfo(id) {
 	return instance.get(`users/${id}`);
 }
 
-export { signupUser, loginUser, getUserInfo };
+export { signupUser, loginUser, fetchUserInfo };

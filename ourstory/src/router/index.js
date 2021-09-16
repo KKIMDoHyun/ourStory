@@ -46,31 +46,15 @@ const router = new VueRouter({
 		{
 			path: '/main',
 			name: 'main',
-			// beforeEnter: fetchUserInfo,
 			component: () => import('@/views/MainPage.vue'),
 		},
 		{
 			path: '/mypage',
 			name: 'mypage',
 			beforeEnter: onlyAuthUser,
-			// beforeEnter: (to, form, next) => {
-			// 	if (store.getters.isLogin === false) {
-			// 		alert('로그인이 필요합니다.');
-			// 		next('/');
-			// 		return;
-			// 	}
-			// 	store.commit('startSpinner');
-			// 	store.dispatch('getUserInfo', store.state.id).then(res => {
-			// 		store.commit('endSpinner');
-			// 		next();
-			// 	});
-			// },
 			component: () => import('@/views/MyPage.vue'),
 		},
 	],
 });
 
-// router.beforeEnter((to, from, next) => {
-// 	store.commit('startSpinner');
-// });
 export default router;

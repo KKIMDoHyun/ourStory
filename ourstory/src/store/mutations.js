@@ -17,10 +17,7 @@ export default {
 	clearToken(state) {
 		state.token = '';
 	},
-	startSpinner(state) {
-		state.loadingStatus = true;
-	},
-	endSpinner(state) {
-		state.loadingStatus = false;
+	setRooms(state, rooms) {
+		state.rooms = rooms;
 	},
 };

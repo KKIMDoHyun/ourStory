@@ -1,7 +1,6 @@
 <template>
 	<v-app id="inspire">
-		<Spinner v-if="isLoading"></Spinner>
-		<v-main v-else class="grey lighten-3">
+		<v-main class="grey lighten-3">
 			<v-container>
 				<v-row>
 					<v-col cols="2" v-if="isLogin">
@@ -37,7 +36,7 @@
 					</v-col>
 					<v-col>
 						<v-sheet min-height="70vh" rounded="lg">
-							<!--  -->
+							{{ rooms }}
 						</v-sheet>
 					</v-col>
 				</v-row>
@@ -47,19 +46,7 @@
 </template>
 
 <script>
-import Spinner from '@/components/common/LoadingSpinner.vue';
-import userInfoMixin from '@/mixins/userInfoMixin';
 export default {
-	components: {
-		Spinner,
-	},
-	mixins: [userInfoMixin],
-	data() {
-		return {
-			userInfo: '',
-			isLoading: false,
-		};
-	},
 	computed: {
 		userId() {
 			return this.$store.state.id;
@@ -67,12 +54,21 @@ export default {
 		isLogin() {
 			return this.$store.getters.isLogin;
 		},
+		userInfo() {
+			return this.$store.getters.userInfo;
+		},
+		rooms() {
+			return this.$store.getters.rooms;
+		},
 	},
 	async created() {
-		if (this.isLogin) {
-			await this.fetchUserInfo(this.$store.state.id);
-			console.log('dddd', this.userInfo);
+		try {
+			await this.$store.dispatch('FETCH_ROOMS');
+			console.log(this.$store.state.rooms);
+		} catch (err) {
+			console.log(err);
 		}
+		// console.log(this.$store.state.rooms);
 	},
 };
 </script>
