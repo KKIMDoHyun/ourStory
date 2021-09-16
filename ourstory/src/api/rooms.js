@@ -8,4 +8,7 @@ function createRoom() {
 	return rooms.post('rooms');
 }
 
-export { fetchRooms, createRoom };
+function fetchDetailRoom(id) {
+	return rooms.get(`rooms/${id}`);
+}
+export { fetchRooms, createRoom, fetchDetailRoom };

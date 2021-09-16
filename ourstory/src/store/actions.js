@@ -34,7 +34,6 @@ export default {
 	async FETCH_ROOMS({ commit }) {
 		const { data } = await fetchRooms();
 		commit('setRooms', data);
-		console.log(data);
 		return data;
 	},
 };

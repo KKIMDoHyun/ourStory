@@ -54,6 +54,12 @@ const router = new VueRouter({
 			beforeEnter: onlyAuthUser,
 			component: () => import('@/views/MyPage.vue'),
 		},
+		{
+			path: '/room/:id',
+			name: 'room',
+			beforeEnter: onlyAuthUser,
+			component: () => import('@/views/RoomDetailPage.vue'),
+		},
 	],
 });
 
