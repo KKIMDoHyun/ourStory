@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rooms",
+  "info": {
+    "name": "Room",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "password": {
+      "type": "password",
+      "required": true
+    },
+    "memberNum": {
+      "type": "integer",
+      "default": 0
+    },
+    "leader": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "rooms"
+    },
+    "members": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "joined",
+      "dominant": true
+    }
+  }
+}
