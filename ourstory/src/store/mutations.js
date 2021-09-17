@@ -20,4 +20,7 @@ export default {
 	setRooms(state, rooms) {
 		state.rooms = rooms;
 	},
+	setRoomData(state, roomData) {
+		state.roomData = roomData;
+	},
 };

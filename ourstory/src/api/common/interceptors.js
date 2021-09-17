@@ -5,8 +5,7 @@ export function setInterceptors(instance) {
 	instance.interceptors.request.use(
 		function (config) {
 			// Do something before request is sent
-			config.headers.Authorization = store.state.token;
-			console.log(config);
+			config.headers.Authorization = `Bearer ${store.state.token}`;
 			return config;
 		},
 		function (error) {

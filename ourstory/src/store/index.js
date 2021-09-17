@@ -12,6 +12,7 @@ export default new Vuex.Store({
 		id: getIdFromCookie() || '',
 		token: getAuthFromCookie() || '',
 		rooms: [],
+		roomData: '',
 	},
 	getters: {
 		isLogin(state) {

@@ -16,14 +16,6 @@
       "type": "string",
       "required": true
     },
-    "password": {
-      "type": "password",
-      "required": true
-    },
-    "memberNum": {
-      "type": "integer",
-      "default": 0
-    },
     "leader": {
       "plugin": "users-permissions",
       "model": "user",
@@ -33,6 +25,21 @@
       "plugin": "users-permissions",
       "collection": "user",
       "via": "joined",
+      "dominant": true
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "password": {
+      "type": "string",
+      "required": true,
+      "minLength": 4,
+      "maxLength": 15
+    },
+    "tags": {
+      "collection": "tag",
+      "via": "rooms",
       "dominant": true
     }
   }

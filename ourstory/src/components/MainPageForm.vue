@@ -27,14 +27,16 @@
 								<v-divider class="my-2"></v-divider>
 
 								<v-list-item link color="grey lighten-4">
-									<v-list-item-content>
-										<v-list-item-content>
-											<v-list-item-title class="text-center">
-												방 만들기
-											</v-list-item-title>
-										</v-list-item-content>
+									<v-list-item-content @click="createRoom">
+										<v-list-item-title class="text-center">
+											방 만들기
+										</v-list-item-title>
 									</v-list-item-content>
 								</v-list-item>
+								<CreateRoomDialog
+									:createRoomDialog="createRoomDialog"
+									@closeDialog="closeCreateRoomDialog"
+								></CreateRoomDialog>
 								<v-text-field
 									v-model="searchTitle"
 									label="방 제목 찾기"
@@ -49,7 +51,12 @@
 						</v-sheet>
 					</v-col>
 					<v-col>
-						<v-sheet min-height="70vh" rounded="lg">
+						<v-sheet
+							min-height="75vh"
+							rounded="lg"
+							class="overflow-y-auto"
+							max-height="400"
+						>
 							<v-list two-line>
 								<v-list-item-group active-class="pink--text">
 									<template v-for="(room, index) in rooms">
@@ -122,13 +129,19 @@
 </template>
 
 <script>
+import CreateRoomDialog from '@/components/dialog/CreateRoomDialog.vue';
 export default {
+	components: {
+		CreateRoomDialog,
+	},
 	data() {
 		return {
 			searchTitle: '',
 			searchLeader: '',
 			dialog: false,
 			password: '',
+			selectedRoom: null,
+			createRoomDialog: false,
 		};
 	},
 	computed: {
@@ -145,23 +158,29 @@ export default {
 			return this.$store.getters.rooms;
 		},
 	},
-	async created() {
-		try {
-			await this.$store.dispatch('FETCH_ROOMS');
-			console.log(this.$store.state.rooms);
-		} catch (err) {
-			console.log(err);
-		}
-		// console.log(this.$store.state.rooms);
-	},
 	methods: {
+		createRoom() {
+			this.createRoomDialog = true;
+		},
+		closeCreateRoomDialog(dialog) {
+			this.createRoomDialog = dialog;
+		},
 		goRoom(index) {
-			this.dialog = true;
-			console.log(this.rooms[index]);
+			if (this.isLogin) {
+				this.dialog = true;
+				this.selectedRoom = this.rooms[index];
+			} else {
+				console.log('로그인하세요');
+			}
 			// const id = this.rooms[index].id;
 			// this.$router.push(`/room/${id}`).catch(() => {});
 		},
 		checkPassword() {
+			if (this.selectedRoom.password === this.password) {
+				this.password = '';
+				this.$router.push(`room/${this.selectedRoom.id}`);
+			}
+			this.password = '';
 			this.dialog = false;
 		},
 	},

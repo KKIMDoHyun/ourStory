@@ -6,7 +6,7 @@ import {
 import router from '../router';
 import { loginUser, fetchUserInfo } from '@/api/auth';
 import { fetchRooms } from '@/api/rooms';
-
+import { createRoom, fetchDetailRoom } from '@/api/detailRooms';
 export default {
 	async LOGIN({ commit }, userData) {
 		const { data } = await loginUser(userData);
@@ -35,5 +35,14 @@ export default {
 		const { data } = await fetchRooms();
 		commit('setRooms', data);
 		return data;
+	},
+	async CREATE_ROOM({ commit }, roomData) {
+		const { data } = await createRoom(roomData);
+		commit('setRoomData', roomData);
+		return data;
+	},
+	async FETCH_DETAILROOM({ commit }, id) {
+		const { data } = await fetchDetailRoom(id);
+		commit('setRoomData', data);
 	},
 };

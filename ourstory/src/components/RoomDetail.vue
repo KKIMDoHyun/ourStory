@@ -1,9 +1,0 @@
-<template>
-	<div>룸</div>
-</template>
-
-<script>
-export default {};
-</script>
-
-<style></style>

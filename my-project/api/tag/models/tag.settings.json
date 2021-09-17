@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tags",
+  "info": {
+    "name": "Tag",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tag": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "rooms": {
+      "via": "tags",
+      "collection": "rooms"
+    }
+  }
+}

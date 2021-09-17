@@ -20,7 +20,7 @@ module.exports = {
         } else {
             entity = await strapi.services.post.create(ctx.request.body);
         }
-
+s
         return sanitizeEntity(entity, { model: strapi.models.post});
     }
 };

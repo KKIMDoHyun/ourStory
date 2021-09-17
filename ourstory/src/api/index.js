@@ -17,4 +17,5 @@ function createInstanceWithAuth() {
 
 export const instance = createInstance();
 export const rooms = createInstance();
+export const detailRooms = createInstanceWithAuth();
 export const posts = createInstanceWithAuth();
