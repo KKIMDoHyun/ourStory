@@ -105,6 +105,7 @@
 					<v-col cols="12">
 						<v-text-field
 							v-model="password"
+							type="password"
 							label="비밀번호"
 							filled
 							rounded

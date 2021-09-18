@@ -20,7 +20,18 @@ export default {
 	setRooms(state, rooms) {
 		state.rooms = rooms;
 	},
-	setRoomData(state, roomData) {
-		state.roomData = roomData;
+	addRoomData(state, roomData) {
+		const rooms = state.rooms;
+		rooms.push(roomData);
+		state.rooms = rooms;
+	},
+	setRoomDetail(state, data) {
+		state.roomDetail = data;
+	},
+	setRoomId(state, id) {
+		state.roomId = id;
+	},
+	setPosts(state, posts) {
+		state.posts = posts;
 	},
 };

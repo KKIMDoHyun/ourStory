@@ -22,7 +22,7 @@ export default {
 			try {
 				this.isLoading = true;
 				await this.$store.dispatch('FETCH_DETAILROOM', id);
-				console.log(this.$store.state.roomData);
+				await this.$store.dispatch('FETCH_POSTS');
 				this.isLoading = false;
 			} catch (err) {
 				console.log(err);

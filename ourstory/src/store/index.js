@@ -12,7 +12,9 @@ export default new Vuex.Store({
 		id: getIdFromCookie() || '',
 		token: getAuthFromCookie() || '',
 		rooms: [],
-		roomData: '',
+		roomId: '',
+		roomDetail: '',
+		posts: [],
 	},
 	getters: {
 		isLogin(state) {
@@ -23,6 +25,9 @@ export default new Vuex.Store({
 		},
 		rooms(state) {
 			return state.rooms;
+		},
+		posts(state) {
+			return state.posts;
 		},
 	},
 	mutations,

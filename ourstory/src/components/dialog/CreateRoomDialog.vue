@@ -94,8 +94,8 @@ export default {
 					content: this.content,
 					password: this.password,
 				};
-				await this.$store.dispatch('CREATE_ROOM', roomData);
 				this.$emit('closeDialog', false);
+				await this.$store.dispatch('CREATE_ROOM', roomData);
 			} catch (err) {
 				console.log(err.response);
 			}
