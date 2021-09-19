@@ -1,7 +1,7 @@
 <template>
 	<v-app id="inspire">
 		<v-main class="grey lighten-3">
-			<v-card class="mx-auto mb-8" style="max-width: 750px">
+			<v-card class="mx-auto mb-4" style="max-width: 750px">
 				<form @submit.prevent="submitPost">
 					<v-text-field
 						filled
@@ -35,15 +35,15 @@
 					</v-card-actions>
 				</form>
 			</v-card>
-			<RoomSidebarForm></RoomSidebarForm>
+			<!-- <RoomSidebarForm></RoomSidebarForm> -->
 			<Spinner v-if="isLoading"></Spinner>
-			<PostListForm @loadingStatus="loadingStatus"></PostListForm>
+			<PostListForm></PostListForm>
 		</v-main>
 	</v-app>
 </template>
 
 <script>
-import RoomSidebarForm from '@/components/RoomSidebarForm.vue';
+// import RoomSidebarForm from '@/components/RoomSidebarForm.vue';
 import PostListForm from '@/components/PostListForm.vue';
 import Spinner from '@/components/common/LoadingSpinner.vue';
 
@@ -51,7 +51,7 @@ export default {
 	components: {
 		PostListForm,
 		Spinner,
-		RoomSidebarForm,
+		// RoomSidebarForm,
 	},
 	data() {
 		return {
