@@ -7,7 +7,7 @@ import router from '../router';
 import { loginUser, fetchUserInfo } from '@/api/auth';
 import { fetchRooms } from '@/api/rooms';
 import { createRoom, fetchDetailRoom } from '@/api/detailRooms';
-import { createPost, fetchPosts } from '@/api/posts';
+import { createPost, fetchPosts, deletePost } from '@/api/posts';
 import store from '.';
 
 export default {
@@ -63,5 +63,10 @@ export default {
 		const { data } = await createPost(postData);
 		commit('addPost', data);
 		return data;
+	},
+	async DELETE_POST({ commit }, id) {
+		const { data } = await deletePost(id);
+		const index = store.state.posts.findIndex(i => i.id == data.id);
+		commit('deletePost', index);
 	},
 };

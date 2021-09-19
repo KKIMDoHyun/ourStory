@@ -37,4 +37,7 @@ export default {
 	addPost(state, post) {
 		state.posts.unshift(post);
 	},
+	deletePost(state, index) {
+		state.posts.splice(index, 1);
+	},
 };

@@ -1,30 +1,59 @@
 <template>
 	<v-app id="inspire">
 		<v-main class="grey lighten-3">
+			<Spinner v-if="isLoading"></Spinner>
 			<v-card
+				v-else
 				class="mx-auto mb-9"
 				max-width="750px"
-				v-for="(room, index) in posts"
+				v-for="(post, index) in posts"
 				:key="index"
 			>
-				<v-card-title>
-					<span class="text-body-2 font-weight-light">{{
-						room.author.email
-					}}</span>
-				</v-card-title>
-
-				<v-card-text class="text-subtitle-1 font-weight-bold">
-					{{ room.title }}
-				</v-card-text>
-				<v-card-text class="text-subtitle-2 font-weight-bold">
-					{{ room.content }}
-				</v-card-text>
-
 				<v-card-actions>
 					<v-list-item class="grow">
 						<v-list-item-content>
-							<v-list-item-title>{{
-								room.updatedAt | formatDate
+							<v-list-item-title class="text-h6 font-weight-light">{{
+								post.title
+							}}</v-list-item-title>
+						</v-list-item-content>
+
+						<v-row align="center" justify="end">
+							<v-btn class="ma-1" text icon color="black">
+								<v-icon>mdi-pencil-plus</v-icon>
+							</v-btn>
+							<v-btn
+								class="ma-1"
+								text
+								icon
+								color="black"
+								@click="deletePost(post.id)"
+							>
+								<v-icon>mdi-delete</v-icon>
+							</v-btn>
+						</v-row>
+					</v-list-item>
+				</v-card-actions>
+
+				<v-card-actions>
+					<v-card-text class="text-h5 font-weight-bold">
+						{{ post.content }}
+					</v-card-text>
+				</v-card-actions>
+
+				<v-card-actions>
+					<v-list-item class="grow">
+						<v-list-item-avatar color="grey darken-3">
+							<v-img
+								class="elevation-6"
+								alt=""
+								src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+							></v-img>
+						</v-list-item-avatar>
+
+						<v-list-item-content>
+							<v-list-item-title>{{ post.author.email }}</v-list-item-title>
+							<v-list-item-title class="text-body-2">{{
+								post.updatedAt | formatDate
 							}}</v-list-item-title>
 						</v-list-item-content>
 
@@ -43,10 +72,35 @@
 </template>
 
 <script>
+import Spinner from '@/components/common/LoadingSpinner.vue';
+
 export default {
+	components: {
+		Spinner,
+	},
+	data() {
+		return {
+			isLoading: false,
+		};
+	},
 	computed: {
 		posts() {
 			return this.$store.state.posts;
+		},
+		userId() {
+			return this.$store.state.id;
+		},
+	},
+	methods: {
+		async deletePost(id) {
+			try {
+				this.isLoading = true;
+				await this.$store.dispatch('DELETE_POST', id);
+				console.log('DD');
+				this.isLoading = false;
+			} catch (err) {
+				console.log(err);
+			}
 		},
 	},
 };

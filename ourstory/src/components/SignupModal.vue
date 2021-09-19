@@ -102,7 +102,8 @@ export default {
 				) {
 					this.errMessage = '패스워드를 입력해주세요.';
 				} else {
-					this.errMessage = '이메일과 패스워드가 일치하지 않습니다.';
+					console.log(err.response.data.message[0].messages[0].message);
+					this.errMessage = '중복된 계정입니다.';
 				}
 				this.isFail = true;
 			}

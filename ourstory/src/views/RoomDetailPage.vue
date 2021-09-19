@@ -5,6 +5,7 @@
 				<form @submit.prevent="submitPost">
 					<v-text-field
 						filled
+						background-color="white"
 						color="deep-purple"
 						label="제목을 적어주세요."
 						required
@@ -34,14 +35,15 @@
 					</v-card-actions>
 				</form>
 			</v-card>
+			<RoomSidebarForm></RoomSidebarForm>
 			<Spinner v-if="isLoading"></Spinner>
-			<PostListForm v-else></PostListForm>
+			<PostListForm @loadingStatus="loadingStatus"></PostListForm>
 		</v-main>
 	</v-app>
 </template>
 
 <script>
-// import PostInputForm from '@/components/PostInputForm.vue';
+import RoomSidebarForm from '@/components/RoomSidebarForm.vue';
 import PostListForm from '@/components/PostListForm.vue';
 import Spinner from '@/components/common/LoadingSpinner.vue';
 
@@ -49,6 +51,7 @@ export default {
 	components: {
 		PostListForm,
 		Spinner,
+		RoomSidebarForm,
 	},
 	data() {
 		return {
@@ -84,10 +87,10 @@ export default {
 					content: this.content,
 					room: this.$store.state.roomDetail,
 				};
+				this.clearInput();
 				this.isLoading = true;
 				await this.$store.dispatch('CREATE_POST', postData);
 				this.isLoading = false;
-				this.clearInput();
 			} catch (err) {
 				console.log(err.response);
 			}
@@ -95,6 +98,10 @@ export default {
 		clearInput() {
 			this.title = '';
 			this.content = '';
+		},
+		loadingStatus(status) {
+			console.log(status);
+			this.isLoading = status;
 		},
 	},
 	async created() {
