@@ -61,7 +61,7 @@ export default {
 	},
 	async CREATE_POST({ commit }, postData) {
 		const { data } = await createPost(postData);
-		console.log(data);
-		console.log(commit);
+		commit('addPost', data);
+		return data;
 	},
 };
