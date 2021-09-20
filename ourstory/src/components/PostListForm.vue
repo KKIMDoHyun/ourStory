@@ -18,10 +18,19 @@
 						</v-list-item-content>
 
 						<v-row align="center" justify="end">
-							<v-btn class="ma-1" text icon color="black">
+							<v-btn
+								v-if="post.author.id === userId"
+								class="ma-1"
+								text
+								icon
+								color="black"
+								@click="modifyPost(post.id)"
+							>
 								<v-icon>mdi-pencil-plus</v-icon>
 							</v-btn>
+
 							<v-btn
+								v-if="post.author.id === userId"
 								class="ma-1"
 								text
 								icon
@@ -73,7 +82,6 @@
 
 <script>
 import Spinner from '@/components/common/LoadingSpinner.vue';
-
 export default {
 	components: {
 		Spinner,
@@ -96,12 +104,37 @@ export default {
 			try {
 				this.isLoading = true;
 				await this.$store.dispatch('DELETE_POST', id);
-				console.log('DD');
 				this.isLoading = false;
 			} catch (err) {
 				console.log(err);
 			}
 		},
+		modifyPost(id) {
+			this.$router.push(`/post/modify/${id}`);
+		},
+		// async modifyPost(id) {
+		// 	try {
+		// 		this.isLoading = true;
+		// 		console.log(id);
+		// 		// await this.$store.dispatch('MODIFY_POST', id);
+		// 		this.isLoading = false;
+		// 	} catch (err) {
+		// 		console.log(err);
+		// 	}
+		// },
+		async fetchDetailRoom(id) {
+			try {
+				this.isLoading = true;
+				await this.$store.dispatch('FETCH_DETAILROOM', id);
+				await this.$store.dispatch('FETCH_POSTS');
+				this.isLoading = false;
+			} catch (err) {
+				console.log(err);
+			}
+		},
+	},
+	async created() {
+		await this.fetchDetailRoom(this.$route.params.id);
 	},
 };
 </script>

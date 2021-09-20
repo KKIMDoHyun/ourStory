@@ -7,7 +7,7 @@ import router from '../router';
 import { loginUser, fetchUserInfo } from '@/api/auth';
 import { fetchRooms } from '@/api/rooms';
 import { createRoom, fetchDetailRoom } from '@/api/detailRooms';
-import { createPost, fetchPosts, deletePost } from '@/api/posts';
+import { createPost, fetchPosts, deletePost, modifyPost } from '@/api/posts';
 import store from '.';
 
 export default {
@@ -68,5 +68,14 @@ export default {
 		const { data } = await deletePost(id);
 		const index = store.state.posts.findIndex(i => i.id == data.id);
 		commit('deletePost', index);
+	},
+	async MODIFY_POST({ commit }, payload) {
+		const { data } = await modifyPost(payload);
+		const index = store.state.posts.findIndex(i => i.id == data.id);
+		commit('modifyPost', { index, data });
+		console.log(store.state.roomId);
+		// router
+		// 	.push({ name: 'room', params: { id: store.state.roomId } })
+		// 	.catch(() => {});
 	},
 };

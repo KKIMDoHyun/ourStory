@@ -35,15 +35,13 @@
 					</v-card-actions>
 				</form>
 			</v-card>
-			<!-- <RoomSidebarForm></RoomSidebarForm> -->
 			<Spinner v-if="isLoading"></Spinner>
-			<PostListForm></PostListForm>
+			<PostListForm v-else></PostListForm>
 		</v-main>
 	</v-app>
 </template>
 
 <script>
-// import RoomSidebarForm from '@/components/RoomSidebarForm.vue';
 import PostListForm from '@/components/PostListForm.vue';
 import Spinner from '@/components/common/LoadingSpinner.vue';
 
@@ -51,7 +49,6 @@ export default {
 	components: {
 		PostListForm,
 		Spinner,
-		// RoomSidebarForm,
 	},
 	data() {
 		return {
@@ -70,16 +67,6 @@ export default {
 		},
 	},
 	methods: {
-		async fetchDetailRoom(id) {
-			try {
-				this.isLoading = true;
-				await this.$store.dispatch('FETCH_DETAILROOM', id);
-				await this.$store.dispatch('FETCH_POSTS');
-				this.isLoading = false;
-			} catch (err) {
-				console.log(err);
-			}
-		},
 		async submitPost() {
 			try {
 				const postData = {
@@ -99,13 +86,6 @@ export default {
 			this.title = '';
 			this.content = '';
 		},
-		loadingStatus(status) {
-			console.log(status);
-			this.isLoading = status;
-		},
-	},
-	async created() {
-		await this.fetchDetailRoom(this.$route.params.id);
 	},
 };
 </script>

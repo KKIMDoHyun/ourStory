@@ -40,4 +40,7 @@ export default {
 	deletePost(state, index) {
 		state.posts.splice(index, 1);
 	},
+	modifyPost(state, payload) {
+		state.posts.splice(payload.index, 1, payload.data);
+	},
 };

@@ -60,6 +60,12 @@ const router = new VueRouter({
 			beforeEnter: onlyAuthUser,
 			component: () => import('@/views/RoomDetailPage.vue'),
 		},
+		{
+			path: '/post/modify/:id',
+			name: 'postModify',
+			beforeEnter: onlyAuthUser,
+			component: () => import('@/views/postModifyPage.vue'),
+		},
 	],
 });
 
