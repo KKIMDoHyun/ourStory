@@ -6,13 +6,13 @@
  */
 
 module.exports = {
-    lifecycles: {
-        async afterFindOne(result, params, populate) {
-            const res = await strapi.query('post')
-                .model.query(q => {
-                    q.where('id', result.id);
-                    q.increment('view', 1);
-                }).fetch();
-        }
-    }
+    // lifecycles: {
+    //     async afterFindOne(result, params, populate) {
+    //         const res = await strapi.query('post')
+    //             .model.query(q => {
+    //                 q.where('id', result.id);
+    //                 q.increment('view', 1);
+    //             }).fetch();
+    //     }
+    // }
 };

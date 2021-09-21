@@ -15,13 +15,13 @@
     "title": {
       "type": "string",
       "required": true,
-      "unique": true
+      "unique": false
     },
     "content": {
       "type": "richtext",
       "required": true
     },
-    "view": {
+    "like": {
       "type": "integer",
       "default": 0
     },
@@ -33,6 +33,10 @@
     "comments": {
       "via": "post",
       "collection": "comment"
+    },
+    "room": {
+      "type": "json",
+      "required": true
     }
   }
 }

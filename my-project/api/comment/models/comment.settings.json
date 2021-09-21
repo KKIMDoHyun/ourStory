@@ -22,8 +22,11 @@
       "model": "user"
     },
     "post": {
-      "model": "post",
-      "via": "comments"
+      "via": "comments",
+      "model": "post"
+    },
+    "room": {
+      "type": "json"
     }
   }
 }

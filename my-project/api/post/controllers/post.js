@@ -11,7 +11,6 @@ module.exports = {
         let entity;
         
         let user = ctx.state.user.id;
-
         ctx.request.body.author = user;
         
         if(ctx.is('multipart')) {
@@ -20,7 +19,7 @@ module.exports = {
         } else {
             entity = await strapi.services.post.create(ctx.request.body);
         }
-s
+
         return sanitizeEntity(entity, { model: strapi.models.post});
     }
 };
