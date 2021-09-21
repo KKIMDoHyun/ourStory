@@ -132,3 +132,9 @@
 
 > 해결: 처음에는 this.comments[index] = !this.comments[index]로 값을 변경해 주었지만, data 안의 속성을 변경하면 vue가 감지하지 못한다는 사실을 알게되었다. 그래서 data 자체를 바꿔주도록 temp라는 변수에 comments를 slice로 복사해놓고 temp[index] = !temp[index]로 값을 바꿔주고 temp를 comments에 넣어주었다. 그랬더니 정상적으로 원하는대로 작동이 되었다.
 
+![전](https://user-images.githubusercontent.com/52418706/134156382-b347d81a-b138-4528-b3fc-7e75e26050c4.JPG)  
+<전>
+
+![후](https://user-images.githubusercontent.com/52418706/134156408-3cb8639f-b580-4eaa-b978-7ed679940e95.JPG)  
+<후>
+
