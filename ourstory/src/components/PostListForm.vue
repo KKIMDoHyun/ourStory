@@ -67,13 +67,22 @@
 						</v-list-item-content>
 
 						<v-row align="center" justify="end">
-							<v-icon class="mr-1"> mdi-heart </v-icon>
-							<span class="subheading mr-2">256</span>
-							<span class="mr-1">·</span>
-							<v-icon class="mr-1"> mdi-share-variant </v-icon>
-							<span class="subheading">45</span>
+							<v-btn
+								class="ma-1"
+								text
+								icon
+								color="black"
+								@click="commentOpen(index)"
+							>
+								<v-icon>mdi-comment-multiple-outline</v-icon>
+							</v-btn>
 						</v-row>
 					</v-list-item>
+				</v-card-actions>
+				<v-divider></v-divider>
+				{{ comments }}
+				<v-card-actions v-if="comments[index]">
+					<v-text-field filled label="Filled" clearable></v-text-field>
 				</v-card-actions>
 			</v-card>
 		</v-main>
@@ -89,6 +98,7 @@ export default {
 	data() {
 		return {
 			isLoading: false,
+			comments: [],
 		};
 	},
 	computed: {
@@ -98,6 +108,13 @@ export default {
 		userId() {
 			return this.$store.state.id;
 		},
+		// comment() {
+		// 	const arr = [];
+		// 	for (let i in this.$store.state.posts) {
+		// 		arr[i] = false;
+		// 	}
+		// 	return arr;
+		// },
 	},
 	methods: {
 		async deletePost(id) {
@@ -112,21 +129,19 @@ export default {
 		modifyPost(id) {
 			this.$router.push(`/post/modify/${id}`);
 		},
-		// async modifyPost(id) {
-		// 	try {
-		// 		this.isLoading = true;
-		// 		console.log(id);
-		// 		// await this.$store.dispatch('MODIFY_POST', id);
-		// 		this.isLoading = false;
-		// 	} catch (err) {
-		// 		console.log(err);
-		// 	}
-		// },
+		commentOpen(index) {
+			this.comments[index] = !this.comments[index];
+			console.log(this.comments);
+		},
 		async fetchDetailRoom(id) {
 			try {
 				this.isLoading = true;
 				await this.$store.dispatch('FETCH_DETAILROOM', id);
-				await this.$store.dispatch('FETCH_POSTS');
+				const data = await this.$store.dispatch('FETCH_POSTS');
+				await this.$store.dispatch('FETCH_COMMENTS');
+				for (let i = 0; i < data.length; i++) {
+					this.comments.push(false);
+				}
 				this.isLoading = false;
 			} catch (err) {
 				console.log(err);

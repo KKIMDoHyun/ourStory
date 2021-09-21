@@ -43,4 +43,8 @@ export default {
 	modifyPost(state, payload) {
 		state.posts.splice(payload.index, 1, payload.data);
 	},
+	setComments(state, comments) {
+		console.log(state);
+		console.log(comments);
+	},
 };
