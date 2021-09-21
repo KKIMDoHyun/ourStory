@@ -24,7 +24,7 @@
 									</v-list-item-content>
 								</v-list-item>
 
-								<v-divider class="my-2"></v-divider>
+								<!-- <v-divider class="my-2"></v-divider> -->
 
 								<v-list-item link color="grey lighten-4">
 									<v-list-item-content @click="createRoom">
@@ -37,7 +37,7 @@
 									:createRoomDialog="createRoomDialog"
 									@closeDialog="closeCreateRoomDialog"
 								></CreateRoomDialog>
-								<v-text-field
+								<!-- <v-text-field
 									v-model="searchTitle"
 									label="방 제목 찾기"
 									solo
@@ -46,7 +46,7 @@
 									v-model="searchLeader"
 									label="방장 찾기"
 									solo
-								></v-text-field>
+								></v-text-field> -->
 							</v-list>
 						</v-sheet>
 					</v-col>

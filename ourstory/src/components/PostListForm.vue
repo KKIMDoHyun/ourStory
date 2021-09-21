@@ -80,7 +80,6 @@
 					</v-list-item>
 				</v-card-actions>
 				<v-divider></v-divider>
-				{{ comments }}
 				<v-card-actions v-if="comments[index]">
 					<v-text-field filled label="Filled" clearable></v-text-field>
 				</v-card-actions>
@@ -130,8 +129,9 @@ export default {
 			this.$router.push(`/post/modify/${id}`);
 		},
 		commentOpen(index) {
-			this.comments[index] = !this.comments[index];
-			console.log(this.comments);
+			const temp = this.comments.slice();
+			temp[index] = !temp[index];
+			this.comments = temp;
 		},
 		async fetchDetailRoom(id) {
 			try {
