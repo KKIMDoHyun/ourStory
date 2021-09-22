@@ -31,7 +31,7 @@ ___
 - 유저는 게시글을 좋아요 누를 수 있다.
 ___
 ## ● ERD
-<img src="https://user-images.githubusercontent.com/52418706/134378434-0d864ccd-b98b-4e55-894f-ca1d9f8cc9e4.PNG" width="400" height="400">
+<img src="https://user-images.githubusercontent.com/52418706/134389848-46fc7284-86c0-444b-a2bc-7615eac738c4.PNG" width="400" height="400">
 
 ___
 ## ● 각 화면
