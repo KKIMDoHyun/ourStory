@@ -31,7 +31,17 @@ ___
 - 유저는 게시글을 좋아요 누를 수 있다.
 ___
 ## ● ERD
+<img src="https://user-images.githubusercontent.com/52418706/134378434-0d864ccd-b98b-4e55-894f-ca1d9f8cc9e4.PNG" width="400" height="400">
 
 ___
 ## ● 각 화면
+
+___
+## ● 앞으로 구현 및 시도 할 예정
+- strapi의 graphQL로 시도하기
+- 위의 사항이 안될 시 localStorage로 구현 (게시글에 댓글을 작성 시 해당 게시글 데이터에 작성한 comment 데이터를 넣기 위함)
+- 좋아요 기능 및 댓글 달기 기능 구현
+- 방의 즐겨찾기 혹은 방에 가입하기 기능 구현
+- typescript 적용
+- nuxt.js 적용
 
