@@ -94,11 +94,17 @@ export default {
 					content: this.content,
 					password: this.password,
 				};
+				this.clearInput();
 				this.$emit('closeDialog', false);
 				await this.$store.dispatch('CREATE_ROOM', roomData);
 			} catch (err) {
 				console.log(err.response);
 			}
+		},
+		clearInput() {
+			this.title = '';
+			this.content = '';
+			this.password = '';
 		},
 	},
 };

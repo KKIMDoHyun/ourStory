@@ -21,8 +21,7 @@ export default {
 		async fetchUserInfo(id) {
 			try {
 				this.isLoading = true;
-				const data = await this.$store.dispatch('FETCH_USERINFO', id);
-				this.userInfo = data;
+				await this.$store.dispatch('FETCH_USERINFO', id);
 				this.isLoading = false;
 			} catch (err) {
 				console.log(err);

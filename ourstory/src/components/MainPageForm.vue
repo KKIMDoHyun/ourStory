@@ -68,7 +68,7 @@
 													></v-list-item-title>
 
 													<div class="text-body-2">
-														멤버 수: {{ room.members.length }}
+														{{ room.content }}
 													</div>
 													<div class="text-caption">
 														방장: {{ room.leader.email }}
@@ -173,8 +173,6 @@ export default {
 			} else {
 				console.log('로그인하세요');
 			}
-			// const id = this.rooms[index].id;
-			// this.$router.push(`/room/${id}`).catch(() => {});
 		},
 		checkPassword() {
 			if (this.selectedRoom.password === this.password) {

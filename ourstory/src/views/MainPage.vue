@@ -22,9 +22,8 @@ export default {
 			try {
 				this.isLoading = true;
 				await this.$store.dispatch('FETCH_ROOMS');
-				const data = await this.$store.dispatch('FETCH_USERINFO', id);
+				await this.$store.dispatch('FETCH_USERINFO', id);
 				this.isLoading = false;
-				this.userInfo = data;
 			} catch (err) {
 				console.log(err);
 			}

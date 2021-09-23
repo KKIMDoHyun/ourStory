@@ -42,7 +42,7 @@ export default {
 	},
 	async CREATE_ROOM({ commit }, roomData) {
 		const { data } = await createRoom(roomData);
-		commit('addRoomData', data);
+		commit('addRoom', data);
 		return data;
 	},
 	async FETCH_DETAILROOM({ commit }, id) {
@@ -52,9 +52,10 @@ export default {
 	},
 	async FETCH_POSTS({ commit }) {
 		const { data } = await fetchPosts();
+		console.log('posts', data);
 		const posts = [];
 		for (let post of data) {
-			if (post.room.id === store.state.roomId) {
+			if (post.roomId === store.state.roomId) {
 				posts.unshift(post);
 			}
 		}
@@ -76,9 +77,9 @@ export default {
 		const index = store.state.posts.findIndex(i => i.id == data.id);
 		commit('modifyPost', { index, data });
 	},
+
 	async FETCH_COMMENTS({ commit }) {
 		const { data } = await fetchComments();
-		console.log(data);
 		commit('setComments', data);
 	},
 };

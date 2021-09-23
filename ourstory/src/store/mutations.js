@@ -17,20 +17,23 @@ export default {
 	clearToken(state) {
 		state.token = '';
 	},
+
 	setRooms(state, rooms) {
 		state.rooms = rooms;
 	},
-	addRoomData(state, roomData) {
+	addRoom(state, roomData) {
 		const rooms = state.rooms;
 		rooms.push(roomData);
 		state.rooms = rooms;
 	},
+
 	setRoomDetail(state, data) {
 		state.roomDetail = data;
 	},
 	setRoomId(state, id) {
 		state.roomId = id;
 	},
+
 	setPosts(state, posts) {
 		state.posts = posts;
 	},

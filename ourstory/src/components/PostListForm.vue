@@ -1,9 +1,7 @@
 <template>
 	<v-app id="inspire">
 		<v-main class="grey lighten-3">
-			<Spinner v-if="isLoading"></Spinner>
 			<v-card
-				v-else
 				class="mx-auto mb-9"
 				max-width="750px"
 				v-for="(post, index) in posts"
@@ -89,14 +87,9 @@
 </template>
 
 <script>
-import Spinner from '@/components/common/LoadingSpinner.vue';
 export default {
-	components: {
-		Spinner,
-	},
 	data() {
 		return {
-			isLoading: false,
 			comments: [],
 		};
 	},
@@ -107,13 +100,6 @@ export default {
 		userId() {
 			return this.$store.state.id;
 		},
-		// comment() {
-		// 	const arr = [];
-		// 	for (let i in this.$store.state.posts) {
-		// 		arr[i] = false;
-		// 	}
-		// 	return arr;
-		// },
 	},
 	methods: {
 		async deletePost(id) {
@@ -133,23 +119,6 @@ export default {
 			temp[index] = !temp[index];
 			this.comments = temp;
 		},
-		async fetchDetailRoom(id) {
-			try {
-				this.isLoading = true;
-				await this.$store.dispatch('FETCH_DETAILROOM', id);
-				const data = await this.$store.dispatch('FETCH_POSTS');
-				await this.$store.dispatch('FETCH_COMMENTS');
-				for (let i = 0; i < data.length; i++) {
-					this.comments.push(false);
-				}
-				this.isLoading = false;
-			} catch (err) {
-				console.log(err);
-			}
-		},
-	},
-	async created() {
-		await this.fetchDetailRoom(this.$route.params.id);
 	},
 };
 </script>

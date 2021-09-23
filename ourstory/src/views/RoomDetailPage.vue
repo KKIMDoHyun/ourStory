@@ -58,6 +58,9 @@ export default {
 		};
 	},
 	computed: {
+		roomId() {
+			return this.$route.params.id;
+		},
 		btnOn() {
 			if (this.title !== '' && this.content !== '') {
 				return false;
@@ -67,12 +70,23 @@ export default {
 		},
 	},
 	methods: {
+		async fetchDetailRoom(id) {
+			try {
+				this.isLoading = true;
+				await this.$store.dispatch('FETCH_DETAILROOM', id);
+				await this.$store.dispatch('FETCH_POSTS');
+				// await this.$store.dispatch('FETCH_COMMENTS');
+				this.isLoading = false;
+			} catch (err) {
+				console.log(err);
+			}
+		},
 		async submitPost() {
 			try {
 				const postData = {
 					title: this.title,
 					content: this.content,
-					room: this.$store.state.roomDetail,
+					roomId: this.roomId,
 				};
 				this.clearInput();
 				this.isLoading = true;
@@ -86,6 +100,9 @@ export default {
 			this.title = '';
 			this.content = '';
 		},
+	},
+	async created() {
+		await this.fetchDetailRoom(this.$route.params.id);
 	},
 };
 </script>
