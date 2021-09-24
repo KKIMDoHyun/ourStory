@@ -89,39 +89,61 @@
 						</v-list-item-content>
 
 						<v-row align="center" justify="end">
-							<v-btn
-								class="ma-1"
-								text
-								icon
-								color="black"
-								@click="commentOpen(index)"
+							<v-icon large color="black" class="ma-1">
+								mdi-comment-multiple-outline</v-icon
 							>
-								<v-icon>mdi-comment-multiple-outline</v-icon>
-							</v-btn>
 						</v-row>
 					</v-list-item>
 				</v-card-actions>
 				<v-divider></v-divider>
-				<v-card-actions v-if="commentToggle[index]">
+				<v-container>
+					<v-row>
+						<v-col cols="12">
+							<v-text-field
+								v-model="commentInput[index]"
+								:append-outer-icon="commentInput[index] ? 'mdi-send' : ''"
+								filled
+								clear-icon="mdi-close-circle"
+								clearable
+								label="댓글"
+								type="text"
+								@click:append-outer="submitComment(index, post.id)"
+								@click:clear="commentClear(index)"
+							></v-text-field>
+						</v-col>
+					</v-row>
+				</v-container>
+				<!-- <v-card-actions v-if="commentToggle[index]">
 					<v-text-field
 						filled
 						label="댓글을 입력하세요."
-						v-model="comment[index]"
+						v-model="commentInput[index]"
 						clearable
 					></v-text-field>
 					<v-btn
-						:disabled="comment[index] === ''"
+						:disabled="commentInput[index] === ''"
 						@click="submitComment(index, post.id)"
 						>달기</v-btn
 					>
-				</v-card-actions>
-				<v-btn
-					sm
-					text
-					v-if="commentToggle[index]"
-					@click="showComments(popst.id)"
-					>댓글 보기</v-btn
-				>
+				</v-card-actions> -->
+				<template v-for="(comment, i) in commentList[post.id]">
+					<v-list-item :key="i">
+						<v-list-item-content>
+							<v-list-item-title
+								v-text="comment.author.email"
+							></v-list-item-title>
+
+							<v-list-item-subtitle
+								class="text--primary"
+								v-text="comment.comment"
+							></v-list-item-subtitle>
+							<span style="font-size: 13px">{{
+								comment.createdAt | formatDate
+							}}</span>
+						</v-list-item-content>
+					</v-list-item>
+					<v-divider :key="i + 'r'"></v-divider>
+				</template>
 			</v-card>
 		</v-main>
 	</v-app>
@@ -133,7 +155,8 @@ export default {
 		return {
 			commentToggle: [],
 			deleteDialog: [],
-			comment: [],
+			commentInput: [],
+			comments: [],
 		};
 	},
 	computed: {
@@ -145,6 +168,9 @@ export default {
 		},
 		roomId() {
 			return this.$route.params.id;
+		},
+		commentList() {
+			return this.$store.state.postComments;
 		},
 	},
 	methods: {
@@ -164,37 +190,43 @@ export default {
 		modifyPost(id) {
 			this.$router.push(`/post/modify/${id}`);
 		},
-		commentOpen(index) {
+		commentOpen(index, postId) {
 			const temp = this.commentToggle.slice();
 			temp[index] = !temp[index];
 			this.commentToggle = temp;
+			this.showComments(index, postId);
 		},
 		commentClear(index) {
-			const temp = this.comment.slice();
+			const temp = this.commentInput.slice();
 			temp[index] = '';
-			this.comment = temp;
+			this.commentInput = temp;
 		},
 		async submitComment(index, postId) {
 			try {
 				const commentData = {
-					comment: this.comment[index],
+					comment: this.commentInput[index],
 					postId: postId,
 					roomId: this.$route.params.id,
 				};
 				await this.$store.dispatch('CREATE_COMMENT', commentData);
 				this.commentClear(index);
-				console.log(this.$store.state.comments);
 			} catch (err) {
 				console.log(err);
 			}
 		},
-		async showComments(postId) {
+		async showComments(index, postId) {
 			try {
-				await this.$store.dispatch('FETCH_COMMENTS', postId);
+				const data = await this.$store.dispatch('FETCH_COMMENTS', postId);
+				this.comments[index] = data;
+				console.log(this.commentList[postId]);
 			} catch (err) {
 				console.log(err);
 			}
 		},
+		// async created() {
+		// 	roomId를 갖고 모든 댓글들을 불러온다.
+		//	postId를 기준으로 객체 배열을 만든다.
+		// }
 	},
 };
 </script>

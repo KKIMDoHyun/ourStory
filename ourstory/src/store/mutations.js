@@ -46,11 +46,13 @@ export default {
 	modifyPost(state, payload) {
 		state.posts.splice(payload.index, 1, payload.data);
 	},
-	setComments(state, comments) {
-		console.log(state);
-		console.log(comments);
+	setComments(state, payload) {
+		state.postComments[payload.postId] = payload.data;
 	},
 	addComment(state, comment) {
-		state.allComments.push(comment);
+		const postId = comment.postId;
+		const comments = state.postComments[comment.postId];
+		comments.push(comment);
+		state.postComments[postId] = comments;
 	},
 };

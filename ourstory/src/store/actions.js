@@ -52,7 +52,6 @@ export default {
 	},
 	async FETCH_POSTS({ commit }) {
 		const { data } = await fetchPosts();
-		console.log('posts', data);
 		const posts = [];
 		for (let post of data) {
 			if (post.roomId === store.state.roomId) {
@@ -80,9 +79,8 @@ export default {
 
 	async FETCH_COMMENTS({ commit }, postId) {
 		const { data } = await fetchComments(postId);
-		// commit('setComments', data);
-		console.log(commit);
-		console.log('comments', data);
+		commit('setComments', { data, postId });
+		return data;
 	},
 	async CREATE_COMMENT({ commit }, payload) {
 		const { data } = await createComment(payload);
