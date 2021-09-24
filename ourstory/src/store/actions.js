@@ -8,7 +8,7 @@ import { loginUser, fetchUserInfo } from '@/api/auth';
 import { fetchRooms } from '@/api/rooms';
 import { createRoom, fetchDetailRoom } from '@/api/detailRooms';
 import { createPost, fetchPosts, deletePost, modifyPost } from '@/api/posts';
-import { fetchComments } from '@/api/comments';
+import { fetchComments, createComment } from '@/api/comments';
 import store from '.';
 
 export default {
@@ -78,8 +78,15 @@ export default {
 		commit('modifyPost', { index, data });
 	},
 
-	async FETCH_COMMENTS({ commit }) {
-		const { data } = await fetchComments();
-		commit('setComments', data);
+	async FETCH_COMMENTS({ commit }, postId) {
+		const { data } = await fetchComments(postId);
+		// commit('setComments', data);
+		console.log(commit);
+		console.log('comments', data);
+	},
+	async CREATE_COMMENT({ commit }, payload) {
+		const { data } = await createComment(payload);
+		commit('addComment', data);
+		return data;
 	},
 };

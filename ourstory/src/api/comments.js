@@ -1,7 +1,11 @@
 import { comments } from './index';
 
-function fetchComments() {
-	return comments.get('comments');
+function fetchComments(postId) {
+	return comments.get(`comments?postId=${postId}`);
 }
 
-export { fetchComments };
+function createComment(commentData) {
+	return comments.post('comments', commentData);
+}
+
+export { fetchComments, createComment };

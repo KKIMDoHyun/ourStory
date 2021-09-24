@@ -50,4 +50,7 @@ export default {
 		console.log(state);
 		console.log(comments);
 	},
+	addComment(state, comment) {
+		state.allComments.push(comment);
+	},
 };

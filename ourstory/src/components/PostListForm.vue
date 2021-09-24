@@ -33,13 +33,37 @@
 								text
 								icon
 								color="black"
-								@click="deletePost(post.id)"
+								@click="deleteDialogOpen(index)"
 							>
 								<v-icon>mdi-delete</v-icon>
 							</v-btn>
 						</v-row>
 					</v-list-item>
 				</v-card-actions>
+
+				<v-dialog v-model="deleteDialog[index]" persistent max-width="290">
+					<v-card>
+						<v-card-title class="text-h5"> 삭제 확인</v-card-title>
+						<v-card-text>정말 게시글을 삭제하시겠습니까?</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn
+								color="green darken-1"
+								text
+								@click="deleteDialogOpen(index)"
+							>
+								Disagree
+							</v-btn>
+							<v-btn
+								color="green darken-1"
+								text
+								@click="deletePost(index, post.id)"
+							>
+								Agree
+							</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
 
 				<v-card-actions>
 					<v-card-text class="text-h5 font-weight-bold">
@@ -78,9 +102,26 @@
 					</v-list-item>
 				</v-card-actions>
 				<v-divider></v-divider>
-				<v-card-actions v-if="comments[index]">
-					<v-text-field filled label="Filled" clearable></v-text-field>
+				<v-card-actions v-if="commentToggle[index]">
+					<v-text-field
+						filled
+						label="댓글을 입력하세요."
+						v-model="comment[index]"
+						clearable
+					></v-text-field>
+					<v-btn
+						:disabled="comment[index] === ''"
+						@click="submitComment(index, post.id)"
+						>달기</v-btn
+					>
 				</v-card-actions>
+				<v-btn
+					sm
+					text
+					v-if="commentToggle[index]"
+					@click="showComments(popst.id)"
+					>댓글 보기</v-btn
+				>
 			</v-card>
 		</v-main>
 	</v-app>
@@ -90,7 +131,9 @@
 export default {
 	data() {
 		return {
-			comments: [],
+			commentToggle: [],
+			deleteDialog: [],
+			comment: [],
 		};
 	},
 	computed: {
@@ -100,13 +143,20 @@ export default {
 		userId() {
 			return this.$store.state.id;
 		},
+		roomId() {
+			return this.$route.params.id;
+		},
 	},
 	methods: {
-		async deletePost(id) {
+		deleteDialogOpen(index) {
+			const temp = this.deleteDialog.slice();
+			temp[index] = !temp[index];
+			this.deleteDialog = temp;
+		},
+		async deletePost(index, id) {
 			try {
-				this.isLoading = true;
+				this.deleteDialogOpen(index);
 				await this.$store.dispatch('DELETE_POST', id);
-				this.isLoading = false;
 			} catch (err) {
 				console.log(err);
 			}
@@ -115,9 +165,35 @@ export default {
 			this.$router.push(`/post/modify/${id}`);
 		},
 		commentOpen(index) {
-			const temp = this.comments.slice();
+			const temp = this.commentToggle.slice();
 			temp[index] = !temp[index];
-			this.comments = temp;
+			this.commentToggle = temp;
+		},
+		commentClear(index) {
+			const temp = this.comment.slice();
+			temp[index] = '';
+			this.comment = temp;
+		},
+		async submitComment(index, postId) {
+			try {
+				const commentData = {
+					comment: this.comment[index],
+					postId: postId,
+					roomId: this.$route.params.id,
+				};
+				await this.$store.dispatch('CREATE_COMMENT', commentData);
+				this.commentClear(index);
+				console.log(this.$store.state.comments);
+			} catch (err) {
+				console.log(err);
+			}
+		},
+		async showComments(postId) {
+			try {
+				await this.$store.dispatch('FETCH_COMMENTS', postId);
+			} catch (err) {
+				console.log(err);
+			}
 		},
 	},
 };

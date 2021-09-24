@@ -15,6 +15,8 @@ export default new Vuex.Store({
 		roomId: '',
 		roomDetail: '',
 		posts: [],
+		allComments: [],
+		postComments: [],
 	},
 	getters: {
 		isLogin(state) {
