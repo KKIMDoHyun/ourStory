@@ -15,7 +15,7 @@ export default new Vuex.Store({
 		roomId: '',
 		roomDetail: '',
 		posts: [],
-		allComments: [],
+		allComments: {},
 		postComments: {},
 	},
 	getters: {

@@ -89,9 +89,10 @@
 						</v-list-item-content>
 
 						<v-row align="center" justify="end">
-							<v-icon large color="black" class="ma-1">
+							<v-icon color="black" class="ma-1">
 								mdi-comment-multiple-outline</v-icon
 							>
+							{{ postCommentNumber(post.id) }}
 						</v-row>
 					</v-list-item>
 				</v-card-actions>
@@ -172,6 +173,9 @@ export default {
 		commentList() {
 			return this.$store.state.postComments;
 		},
+		allComments() {
+			return this.$store.state.allComments;
+		},
 	},
 	methods: {
 		deleteDialogOpen(index) {
@@ -190,11 +194,11 @@ export default {
 		modifyPost(id) {
 			this.$router.push(`/post/modify/${id}`);
 		},
-		commentOpen(index, postId) {
+		commentOpen(index) {
 			const temp = this.commentToggle.slice();
 			temp[index] = !temp[index];
 			this.commentToggle = temp;
-			this.showComments(index, postId);
+			// this.showComments(index, postId);
 		},
 		commentClear(index) {
 			const temp = this.commentInput.slice();
@@ -208,25 +212,17 @@ export default {
 					postId: postId,
 					roomId: this.$route.params.id,
 				};
-				await this.$store.dispatch('CREATE_COMMENT', commentData);
 				this.commentClear(index);
+				await this.$store.dispatch('CREATE_COMMENT', commentData);
+				await this.$store.dispatch('FETCH_ALLCOMMENTS', this.roomId);
 			} catch (err) {
 				console.log(err);
 			}
 		},
-		async showComments(index, postId) {
-			try {
-				const data = await this.$store.dispatch('FETCH_COMMENTS', postId);
-				this.comments[index] = data;
-				console.log(this.commentList[postId]);
-			} catch (err) {
-				console.log(err);
-			}
+		postCommentNumber(id) {
+			if (this.allComments[id] == null) return 0;
+			else return this.allComments[id].length;
 		},
-		// async created() {
-		// 	roomId를 갖고 모든 댓글들을 불러온다.
-		//	postId를 기준으로 객체 배열을 만든다.
-		// }
 	},
 };
 </script>

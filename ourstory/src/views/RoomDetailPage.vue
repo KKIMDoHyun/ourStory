@@ -75,6 +75,7 @@ export default {
 				this.isLoading = true;
 				await this.$store.dispatch('FETCH_DETAILROOM', id);
 				await this.$store.dispatch('FETCH_POSTS');
+				await this.$store.dispatch('FETCH_ALLCOMMENTS', this.roomId);
 				this.isLoading = false;
 			} catch (err) {
 				console.log(err);

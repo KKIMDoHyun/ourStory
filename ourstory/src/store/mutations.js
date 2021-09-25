@@ -46,13 +46,24 @@ export default {
 	modifyPost(state, payload) {
 		state.posts.splice(payload.index, 1, payload.data);
 	},
-	setComments(state, payload) {
-		state.postComments[payload.postId] = payload.data;
+
+	setAllComments(state, allComments) {
+		state.allComments = {};
+		for (let comment of allComments) {
+			if (state.allComments[comment.postId] == null) {
+				state.allComments[comment.postId] = [];
+				state.allComments[comment.postId].push(comment);
+			} else {
+				state.allComments[comment.postId].push(comment);
+			}
+		}
 	},
 	addComment(state, comment) {
-		const postId = comment.postId;
-		const comments = state.postComments[comment.postId];
-		comments.push(comment);
-		state.postComments[postId] = comments;
+		if (state.allComments[comment.postId] == null) {
+			state.allComments[comment.postId] = [];
+			state.allComments[comment.postId].push(comment);
+		} else {
+			state.allComments[comment.postId].push(comment);
+		}
 	},
 };
