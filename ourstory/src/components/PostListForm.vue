@@ -92,7 +92,7 @@
 							<v-icon color="black" class="ma-1">
 								mdi-comment-multiple-outline</v-icon
 							>
-							{{ postCommentNumber(post.id) }}
+							{{ commentNumber(post.id) }}
 						</v-row>
 					</v-list-item>
 				</v-card-actions>
@@ -113,21 +113,37 @@
 							></v-text-field>
 						</v-col>
 					</v-row>
-				</v-container>
-				<!-- <v-card-actions v-if="commentToggle[index]">
-					<v-text-field
-						filled
-						label="댓글을 입력하세요."
-						v-model="commentInput[index]"
-						clearable
-					></v-text-field>
-					<v-btn
-						:disabled="commentInput[index] === ''"
-						@click="submitComment(index, post.id)"
-						>달기</v-btn
+					<small
+						class="seeComments"
+						@click="commentOpen(index)"
+						v-if="!commentToggle[index]"
+						>댓글 보기</small
 					>
-				</v-card-actions> -->
-				<template v-for="(comment, i) in commentList[post.id]">
+					<small class="seeComments" @click="commentOpen(index)" v-else
+						>댓글 숨기기</small
+					>
+				</v-container>
+				<template v-if="commentToggle[index]">
+					<template v-for="(comment, i) in commentList(post.id)">
+						<v-list-item :key="i">
+							<v-list-item-content>
+								<v-list-item-title
+									v-text="comment.author.email"
+								></v-list-item-title>
+
+								<v-list-item-subtitle
+									class="text--primary"
+									v-text="comment.comment"
+								></v-list-item-subtitle>
+								<span style="font-size: 13px">{{
+									comment.createdAt | formatDate
+								}}</span>
+							</v-list-item-content>
+						</v-list-item>
+						<v-divider :key="i + 'r'"></v-divider>
+					</template>
+				</template>
+				<!-- <template v-for="(comment, i) in commentList(post.id)">
 					<v-list-item :key="i">
 						<v-list-item-content>
 							<v-list-item-title
@@ -144,7 +160,7 @@
 						</v-list-item-content>
 					</v-list-item>
 					<v-divider :key="i + 'r'"></v-divider>
-				</template>
+				</template> -->
 			</v-card>
 		</v-main>
 	</v-app>
@@ -169,9 +185,6 @@ export default {
 		},
 		roomId() {
 			return this.$route.params.id;
-		},
-		commentList() {
-			return this.$store.state.postComments;
 		},
 		allComments() {
 			return this.$store.state.allComments;
@@ -215,16 +228,30 @@ export default {
 				this.commentClear(index);
 				await this.$store.dispatch('CREATE_COMMENT', commentData);
 				await this.$store.dispatch('FETCH_ALLCOMMENTS', this.roomId);
+				this.commentOpen(index);
 			} catch (err) {
 				console.log(err);
 			}
 		},
-		postCommentNumber(id) {
+		commentNumber(id) {
 			if (this.allComments[id] == null) return 0;
 			else return this.allComments[id].length;
+		},
+		commentList(id) {
+			if (this.allComments[id] == null) return null;
+			else {
+				return this.allComments[id];
+			}
 		},
 	},
 };
 </script>
 
-<style></style>
+<style scoped>
+.seeComments {
+	cursor: pointer;
+}
+.seeComments:hover {
+	text-decoration: underline;
+}
+</style>
