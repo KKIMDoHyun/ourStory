@@ -37,16 +37,18 @@
 									:createRoomDialog="createRoomDialog"
 									@closeDialog="closeCreateRoomDialog"
 								></CreateRoomDialog>
-								<!-- <v-text-field
-									v-model="searchTitle"
-									label="방 제목 찾기"
-									solo
-								></v-text-field>
+								<v-text-field
+									type="text"
+									v-model="searchKeyWord"
+									placeholder="방 제목 검색"
+									@keydown.tab="KeydownTab"
+								/>
+
 								<v-text-field
 									v-model="searchLeader"
 									label="방장 찾기"
 									solo
-								></v-text-field> -->
+								></v-text-field>
 							</v-list>
 						</v-sheet>
 					</v-col>
@@ -143,6 +145,9 @@ export default {
 			password: '',
 			selectedRoom: null,
 			createRoomDialog: false,
+			searchKeyWord: '',
+			searchData: [],
+			listData: [],
 		};
 	},
 	computed: {

@@ -228,7 +228,9 @@ export default {
 				this.commentClear(index);
 				await this.$store.dispatch('CREATE_COMMENT', commentData);
 				await this.$store.dispatch('FETCH_ALLCOMMENTS', this.roomId);
-				this.commentOpen(index);
+				const temp = this.commentToggle.slice();
+				temp[index] = true;
+				this.commentToggle = temp;
 			} catch (err) {
 				console.log(err);
 			}

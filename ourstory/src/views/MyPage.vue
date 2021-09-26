@@ -30,6 +30,7 @@ export default {
 	},
 	async created() {
 		await this.fetchUserInfo(this.$store.state.id);
+		console.log(this.$store.state.userInfo);
 	},
 };
 </script>
